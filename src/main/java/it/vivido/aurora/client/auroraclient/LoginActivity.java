@@ -3,6 +3,7 @@ package it.vivido.aurora.client.auroraclient;
 import com.androidquery.AQuery;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,8 @@ public class LoginActivity extends Activity {
 
 	public void login(View v)
 	{
-		Toast.makeText(this, "Login in corso...", Toast.LENGTH_LONG).show();
+		Intent in = new Intent(this, MonitorActivity.class);
+		startActivity(in);
 
 	}
 
