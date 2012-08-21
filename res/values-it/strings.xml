@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="bntLogin">Accedi</string>
+    <string name="bntRegisterNew">Non sei registrato? Registrati!</string>
+    <string name="msgLogin">Accesso ad Aurora in corso…</string>
+    
+    <string name="msgEmptyUserPass">Email e/o password sono vuote!</string>
+    <string name="msgBluetoothNotAvailable">Attenzione il bluetooth non è dispobile!</string>
+     <string name="msgBluetoothEnabled">Bluetooth abilitato!\nApplicazione è pronta</string>
+    
+
+</resources>

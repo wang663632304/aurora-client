@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello auroraclient!</string>
-    <string name="app_name">auroraclient</string>
+    <string name="app_name">Aurora</string>
+    <string name="app_version">v1.0</string>
+    <string name="bntLogin">Login</string>
+    <string name="bntRegisterNew">Need account? Register!</string>
+
+    <string name="msgLogin">Accessing to Aurora…</string>
+    <string name="msgEmptyUserPass">Username and/or Password are empty!</string>
+    
+    <string name="msgBluetoothNotAvailable">Sorry, bluetooh not available!</string>
+     <string name="msgBluetoothEnabled">Bluetooth enabled! Application ready</string>
+    
+    
+    
+    
 </resources>
