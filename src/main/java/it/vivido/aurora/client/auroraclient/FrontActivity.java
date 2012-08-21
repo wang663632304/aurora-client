@@ -27,6 +27,8 @@ public class FrontActivity extends Activity{
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
+    public static final int MESSAGE_DATA_IN = 6;
+    
     
  // Key names received from the BluetoothCommandService Handler
     public static final String DEVICE_NAME = "device_name";
@@ -129,7 +131,19 @@ public class FrontActivity extends Activity{
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;
+                
+            case MESSAGE_READ:
+            	msg.getData();
+            	break;
+            	
+            case MESSAGE_DATA_IN:
+            	String data_in = msg.getData().getString("datain");
+            	 Toast.makeText(getApplicationContext(),data_in,
+                         Toast.LENGTH_SHORT).show();
+            	 break;
             }
+            
+            
         }
     };
 

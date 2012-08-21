@@ -24,7 +24,7 @@ public class BluetoothCommandService {
 	private static final boolean D = true;
 
 	// Unique UUID for this application
-	private static final UUID MY_UUID = UUID.fromString("04c6093b-0000-1000-8000-00805f9b34fb");
+	private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 
 	// Member fields
@@ -332,6 +332,13 @@ public class BluetoothCommandService {
 					// Send the obtained bytes to the UI Activity
 					mHandler.obtainMessage(FrontActivity.MESSAGE_READ, bytes, -1, buffer)
 					.sendToTarget();
+					
+					Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_DATA_IN);
+					Bundle bundle = new Bundle();
+					bundle.putString("datain", new String(buffer));
+					msg.setData(bundle);
+					mHandler.sendMessage(msg);
+					
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
 					connectionLost();
@@ -349,8 +356,8 @@ public class BluetoothCommandService {
 				mmOutStream.write(buffer);
 
 				// Share the sent message back to the UI Activity
-				//	                mHandler.obtainMessage(BluetoothChat.MESSAGE_WRITE, -1, -1, buffer)
-				//	                        .sendToTarget();
+					                mHandler.obtainMessage(FrontActivity.MESSAGE_WRITE, -1, -1, buffer)
+					                        .sendToTarget();
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
 			}
@@ -361,8 +368,8 @@ public class BluetoothCommandService {
 				mmOutStream.write(out);
 
 				// Share the sent message back to the UI Activity
-				//	                mHandler.obtainMessage(BluetoothChat.MESSAGE_WRITE, -1, -1, buffer)
-				//	                        .sendToTarget();
+				//	                mHandler.obtainMessage(FrontActivity.MESSAGE_WRITE, -1, -1, buffer)
+				//                        .sendToTarget();
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
 			}
