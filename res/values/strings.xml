@@ -11,6 +11,10 @@
     <string name="msgBluetoothNotAvailable">Sorry, bluetooh not available!</string>
      <string name="msgBluetoothEnabled">Bluetooth enabled! Application ready</string>
     
+     <string name="m_scan">Scan for Aurora</string>
+     <string name="m_exit">Close application</string>
+      <string name="m_settings">Settings</string>
+     
     
     
     

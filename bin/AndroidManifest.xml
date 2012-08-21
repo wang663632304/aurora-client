@@ -15,6 +15,7 @@
         android:label="@string/app_name" >
         
           <activity android:name=".MonitorActivity" />
+           <activity android:name=".FrontActivity" />
         <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

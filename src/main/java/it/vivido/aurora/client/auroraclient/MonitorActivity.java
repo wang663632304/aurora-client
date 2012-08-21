@@ -11,8 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -28,6 +34,8 @@ public class MonitorActivity extends Activity {
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
+	 // Return Intent extra
+    public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
 
 	private AQuery aq;
@@ -50,6 +58,7 @@ public class MonitorActivity extends Activity {
 
 		dataAdapter = new ArrayAdapter<String>(this, R.layout.bt_item, R.id.itemName);		
 		aq.id(R.id.lvBTDevices).getListView().setAdapter(dataAdapter);
+		aq.id(R.id.lvBTDevices).getListView().setOnItemClickListener(mDeviceClickListener);
 		discoverDevices();
 		super.onStart();
 	}
@@ -87,6 +96,30 @@ public class MonitorActivity extends Activity {
 				mBluetoothAdapter.startDiscovery();						
 			}
 	}
+	
+
+	// The on-click listener for all devices in the ListViews
+    private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+            // Cancel discovery because it's costly and we're about to connect
+            mBluetoothAdapter.cancelDiscovery();
+
+            // Get the device MAC address, which is the last 17 chars in the View
+            LinearLayout layout = (LinearLayout)v;
+            TextView tv = (TextView) v.findViewById(R.id.itemName);
+            String info = tv.getText().toString();
+            String address = info.substring(info.length() - 17);
+
+            // Create the result Intent and include the MAC address
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+
+            // Set result and finish this Activity
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+            //Toast.makeText(v.getContext(), address, Toast.LENGTH_LONG).show();
+        }
+    };
 
 
 	@Override

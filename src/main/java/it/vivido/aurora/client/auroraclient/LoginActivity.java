@@ -135,7 +135,7 @@ public class LoginActivity extends Activity {
 					Thread.sleep(2000);
 					progressDialog.hide();
 					//Toast.makeText(getApplication(), R.string.msgLogin, Toast.LENGTH_LONG).show();
-					Intent in = new Intent(getBaseContext(), MonitorActivity.class);
+					Intent in = new Intent(getBaseContext(), FrontActivity.class);
 					startActivity(in);
 				}
 				catch(Exception ex)
