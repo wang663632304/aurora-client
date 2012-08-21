@@ -69,6 +69,8 @@ public class FrontActivity extends Activity{
 		case R.id.itexit:
 			System.exit(0);
 			return true;
+		case R.id.itsettings:
+			startActivity(new Intent(this, PrefsActivity.class));
 			
 		}
 		return false;
