@@ -105,7 +105,7 @@ public class MonitorActivity extends Activity {
             mBluetoothAdapter.cancelDiscovery();
 
             // Get the device MAC address, which is the last 17 chars in the View
-            LinearLayout layout = (LinearLayout)v;
+        
             TextView tv = (TextView) v.findViewById(R.id.itemName);
             String info = tv.getText().toString();
             String address = info.substring(info.length() - 17);

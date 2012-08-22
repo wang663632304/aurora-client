@@ -9,11 +9,33 @@
     <string name="msgEmptyUserPass">Username and/or Password are empty!</string>
     
     <string name="msgBluetoothNotAvailable">Sorry, bluetooh not available!</string>
-     <string name="msgBluetoothEnabled">Bluetooth enabled! Application ready</string>
+    <string name="msgBluetoothEnabled">Bluetooth enabled! Application ready</string>
     
-     <string name="m_scan">Scan for Aurora</string>
-     <string name="m_exit">Close application</string>
-      <string name="m_settings">Settings</string>
+    <string name="m_scan">Scan for Aurora</string>
+    <string name="m_exit">Close application</string>
+    <string name="m_settings">Settings</string>
+    <string name="m_about">About…</string>
+        
+    <string name="bntBack">Back</string>
+    
+    <string name="pref_cat_account">Account information</string>
+    <string name="pref_cat_application">Application</string>
+   
+    <string name="pref_edtusername_dialogMessage">Insert you email:</string>
+    <string name="pref_edtusername_summary">Insert you email for access to Aurora website</string>
+    <string name="pref_edtusername_title">Email:</string>
+    
+    <string name="pref_edtpassword_dialogMessage">Insert you password:</string>
+    <string name="pref_edtpassword_summary">Insert you password for access to Aurora website</string>
+    <string name="pref_edtpassword_title">Password:</string>
+   
+    <string name="pref_cbupdates_summary">Check this for enable automatic updated</string>
+    <string name="pref_cbupdates_title">Check updates:</string>
+   
+    
+     
+     <!-- Oh..we got easter egg here :) -->
+     <string name="msgDedication" >"Dedicated to Simona and Aly\n"This is dedicated to the woman I love\nWherever she stands - my dedication"</string>
      
     
     

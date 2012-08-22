@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/itscan" android:title="@string/m_scan" android:icon="@drawable/ic_scan"></item>
-    <item android:id="@+id/itsettings" android:title="@string/m_settings" android:icon="@drawable/ic_settings"></item>    
-    <item android:id="@+id/itexit" android:title="@string/m_exit" android:icon="@drawable/ic_exit"></item>    
+
+    <item
+        android:id="@+id/itscan"
+        android:icon="@drawable/ic_scan"
+        android:title="@string/m_scan">
+    </item>
+    <item
+        android:id="@+id/itsettings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/m_settings">
+    </item>
+    <item
+        android:id="@+id/itabout"
+        android:icon="@drawable/ic_about"
+        android:title="@string/m_about">
+    </item>
+    <item
+        android:id="@+id/itexit"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/m_exit">
+    </item>
+
 </menu>

@@ -12,6 +12,24 @@
      <string name="m_scan">Scansione Aurora</string>
      <string name="m_exit">Chiudi applicazione</string>
      <string name="m_settings">Opzioni</string>
+     <string name="m_about">Informazioni su…</string>
+     
+    <string name="pref_cat_account">Informazioni account</string>
+    <string name="pref_cat_application">Applicazione</string>
+   
+    <string name="pref_edtusername_dialogMessage">Inserisci la tua email:</string>
+    <string name="pref_edtusername_summary">Inserisci l\'email che utilizzi per Aurora</string>
+    <string name="pref_edtusername_title">Email:</string>
+    
+    <string name="pref_edtpassword_dialogMessage">Inserisci la tua password:</string>
+    <string name="pref_edtpassword_summary">Inserisci la password che utilizzi per Aurora</string>
+    <string name="pref_edtpassword_title">Password:</string>
+   
+    <string name="pref_cbupdates_summary">Spunta questa casella per abilitare i controlli di aggiornamento</string>
+    <string name="pref_cbupdates_title">Controlla aggiornamenti:</string>
+      
+      <string name="bntBack">Indietro</string>
+     
      
      
     

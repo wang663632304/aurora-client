@@ -116,7 +116,13 @@ public class LoginActivity extends Activity {
 	{
 		if (APreferences.getInstance(getApplicationContext()).getValue("email", String.class) != "")
 		{
-			Toast.makeText(getApplication(), R.string.msgLogin, Toast.LENGTH_LONG).show();
+			String email = (String) APreferences.getInstance(getApplicationContext()).getValue("email", String.class);
+			String password = (String) APreferences.getInstance(getApplicationContext()).getValue("password", String.class);
+			aq.find(R.id.edtEmail).getTextView().setText(email);
+			aq.find(R.id.edtPassword).getTextView().setText(password);
+						
+			//Toast.makeText(getApplication(), R.string.msgLogin, Toast.LENGTH_LONG).show();
+			login(getCurrentFocus());
 		}
 	}
 

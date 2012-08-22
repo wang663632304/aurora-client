@@ -5,6 +5,7 @@ import it.vivido.aurora.client.components.BluetoothCommandService;
 import com.androidquery.AQuery;
 
 import android.app.Activity;
+import android.app.TabActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -14,9 +15,11 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.TabHost;
 import android.widget.Toast;
 
-public class FrontActivity extends Activity{
+public class FrontActivity extends TabActivity{
 
 	// Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -44,11 +47,20 @@ public class FrontActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		aq = new AQuery(this);
 		mCommandService = new BluetoothCommandService(this, mHandler);
 		setContentView(R.layout.front_layout);
+		
+		TabHost tabHost = getTabHost();
+		TabHost.TabSpec spec = tabHost.newTabSpec("Test").setIndicator("Test", getResources().getDrawable(R.drawable.icon)).setContent(new Intent(this, TestGraphLayout.class));
+		tabHost.addTab(spec);
+		
+		spec = tabHost.newTabSpec("Test").setIndicator("Test", getResources().getDrawable(R.drawable.icon)).setContent(new Intent(this, TestGraphLayout.class));
+		tabHost.addTab(spec);
+		
 	}
 
 	@Override
@@ -73,7 +85,10 @@ public class FrontActivity extends Activity{
 			return true;
 		case R.id.itsettings:
 			startActivity(new Intent(this, PrefsActivity.class));
-			
+			return true;
+		case R.id.itabout:
+			startActivity(new Intent(this, AboutActivity.class));
+			return true;
 		}
 		return false;
 	}

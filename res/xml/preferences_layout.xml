@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <PreferenceCategory 
-        android:title="First Category"
-        android:key="first_category">
-        
-        <CheckBoxPreference 
-            android:key="perform_updates"
-            android:summary="Enable or disable data updates"
-            android:title="Enable updates" 
-            android:defaultValue="true"
-        />
-                  
-    </PreferenceCategory>
-
-    <PreferenceCategory 
-        android:title="Second Category"
-        android:key="second_category">
-
-        <EditTextPreference
-            android:key="welcome_message"
-            android:title="Welcome Message" 
-            android:summary="Define the Welcome message to be shown"
-            android:dialogTitle="Welcome Message"
-            android:dialogMessage="Provide a message"    
-            android:defaultValue="Default welcome message" />
-
-    </PreferenceCategory>
+        <PreferenceCategory
+        android:key="pref_cat_application"
+        android:title="@string/pref_cat_application" >
     
+            <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_cb_updates"
+        android:summary="@string/pref_cbupdates_summary"
+        android:title="@string/pref_cbupdates_title" />
+            
+            
+        </PreferenceCategory>
+            
+    <PreferenceCategory
+        android:key="first_category"
+        android:title="@string/pref_cat_account" >
+        
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogMessage="@string/pref_edtusername_dialogMessage"
+            android:dialogTitle="@string/pref_cat_account"
+            android:key="email"
+            android:summary="@string/pref_edtusername_summary"
+            android:title="@string/pref_edtusername_title" />
+  
+    
+            <EditTextPreference
+            android:defaultValue=""
+            android:dialogMessage="@string/pref_edtpassword_dialogMessage"
+            android:dialogTitle="@string/pref_cat_account"
+            android:key="password"
+            android:summary="@string/pref_edtpassword_summary"
+            android:title="@string/pref_edtpassword_title"
+            android:inputType="textPassword"
+            />            
+
+ </PreferenceCategory>  
+
 </PreferenceScreen>
