@@ -1,5 +1,8 @@
 package it.vivido.aurora.client.auroraclient;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import it.vivido.aurora.client.components.BluetoothCommandService;
 
 import com.androidquery.AQuery;
@@ -40,8 +43,11 @@ public class FrontActivity extends TabActivity{
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothCommandService mCommandService = null; 
     private String mConnectedDeviceName = null;
-  
     
+    private Timer Carouseltmr;
+  private TabHost tabHost;
+    
+  private int current_index = 0;
 	private AQuery aq;
 
 	@Override
@@ -54,13 +60,22 @@ public class FrontActivity extends TabActivity{
 		mCommandService = new BluetoothCommandService(this, mHandler);
 		setContentView(R.layout.front_layout);
 		
-		TabHost tabHost = getTabHost();
-		TabHost.TabSpec spec = tabHost.newTabSpec("Test").setIndicator("Test", getResources().getDrawable(R.drawable.icon)).setContent(new Intent(this, TestGraphLayout.class));
+		tabHost = getTabHost();
+		TabHost.TabSpec spec = tabHost.newTabSpec("Test").setIndicator("Test graph").setContent(new Intent(this, TestGraphLayout.class));
 		tabHost.addTab(spec);
 		
-		spec = tabHost.newTabSpec("Test").setIndicator("Test", getResources().getDrawable(R.drawable.icon)).setContent(new Intent(this, TestGraphLayout.class));
+		spec = tabHost.newTabSpec("Test2").setIndicator("Test graph 2").setContent(new Intent(this, TestRPMActivity.class));
 		tabHost.addTab(spec);
 		
+		Carouseltmr = new Timer();
+		Carouseltmr.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				Carousel_start();
+				
+			}
+		}, 0, 2000);		
 	}
 
 	@Override
@@ -113,6 +128,28 @@ public class FrontActivity extends TabActivity{
             break;
 	    }
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	private Runnable Carousel_Tick = new Runnable() {
+		public void run() {
+		
+			int count = tabHost.getTabWidget().getTabCount();
+			
+			if (current_index == count)
+				current_index = 0;
+			
+			tabHost.setCurrentTab(current_index);
+			current_index++;
+			
+			//tabHost.setup();
+			
+	
+		}
+	};
+	
+	private void Carousel_start()
+	{
+		runOnUiThread(Carousel_Tick);
 	}
 	
 	// The Handler that gets information back from the BluetoothChatService
