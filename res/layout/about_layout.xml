@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
-
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/aurora_logo" />
-
+
     <TextView
         android:id="@+id/lblAppName"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
         android:textSize="50dp" />
-
+
     <TextView
         android:id="@+id/lblAppVer"
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:text="@string/app_version"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000" />
-
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:text=" "
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+
     <TextView
         android:id="@+id/lblPoweredBy"
         android:layout_width="wrap_content"
@@ -46,14 +46,14 @@
         android:text="Powered by:"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000" />
-
+
     <ImageView
         android:id="@+id/ivvvdoLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
         android:src="@drawable/vivido_logo" />
-
+
     <Button
         android:id="@+id/bntBack"
         android:layout_width="98dp"

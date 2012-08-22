@@ -11,7 +11,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ff0000"
         android:textSize="60dp" />
-
+
     <TextView
         android:id="@+id/lblRPM"
         android:layout_width="wrap_content"

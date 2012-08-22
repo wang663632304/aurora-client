@@ -26,6 +26,9 @@ public class BluetoothCommandService {
 	// Unique UUID for this application
 	private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
+	private Object syncobj = new Object();
+	public static Object syncobj2 = new Object();
+	
 
 	// Member fields
 	private final BluetoothAdapter mAdapter;
@@ -321,24 +324,35 @@ public class BluetoothCommandService {
 
 		public void run() {
 			Log.i(TAG, "BEGIN mConnectedThread");
-			byte[] buffer = new byte[1024];
-
+			byte[] buffer = new byte[2048];
+			int read = -1;
 			// Keep listening to the InputStream while connected
 			while (true) {
 				try {
-					// Read from the InputStream
-					int bytes = mmInStream.read(buffer);
 
-					// Send the obtained bytes to the UI Activity
-					mHandler.obtainMessage(FrontActivity.MESSAGE_READ, bytes, -1, buffer)
-					.sendToTarget();
-					
-					Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_DATA_IN);
-					Bundle bundle = new Bundle();
-					bundle.putString("datain", new String(buffer));
-					msg.setData(bundle);
-					mHandler.sendMessage(msg);
-					
+					synchronized (syncobj) {
+
+						// Read from the InputStream
+						//read = mmInStream.read(buffer);
+						int bytes = mmInStream.read(buffer);
+
+						//byte[] tosend = new byte[bytes];
+
+						//System.arraycopy(buffer, 0, tosend, 0, bytes);
+
+						String str = byteToHex(buffer, bytes);
+
+						// Send the obtained bytes to the UI Activity
+						//mHandler.obtainMessage(FrontActivity.MESSAGE_READ, bytes, -1, tosend)
+						//.sendToTarget();
+
+						Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_DATA_IN);
+						Bundle bundle = new Bundle();
+						bundle.putString("datain", str);
+						msg.setData(bundle);
+						mHandler.sendMessage(msg);
+					}
+
 				} catch (IOException e) {
 					Log.e(TAG, "disconnected", e);
 					connectionLost();
@@ -356,8 +370,8 @@ public class BluetoothCommandService {
 				mmOutStream.write(buffer);
 
 				// Share the sent message back to the UI Activity
-					                mHandler.obtainMessage(FrontActivity.MESSAGE_WRITE, -1, -1, buffer)
-					                        .sendToTarget();
+				mHandler.obtainMessage(FrontActivity.MESSAGE_WRITE, -1, -1, buffer)
+				.sendToTarget();
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
 			}
@@ -383,5 +397,20 @@ public class BluetoothCommandService {
 				Log.e(TAG, "close() of connect socket failed", e);
 			}
 		}
+	}
+	
+	public static String byteToHex(byte[] bytes, int count) {
+		StringBuffer sb = new StringBuffer();
+		synchronized (syncobj2) {
+			for (int i = 0; i < count; i++) {
+				String hex = Integer.toHexString(bytes[i] & 0xFF);
+				if (hex.length() == 1) {
+					hex = '0' + hex;
+				}
+//				Log.d("MonitorActivity",i+":"+hex);
+				sb.append(hex).append(" ");
+			}
+		}
+		return sb.toString();
 	}
 }
