@@ -341,6 +341,7 @@ public class BluetoothCommandService {
 						//System.arraycopy(buffer, 0, tosend, 0, bytes);
 
 						String str = byteToHex(buffer, bytes);
+						str = hexToString(str);
 
 						// Send the obtained bytes to the UI Activity
 						//mHandler.obtainMessage(FrontActivity.MESSAGE_READ, bytes, -1, tosend)
@@ -412,5 +413,29 @@ public class BluetoothCommandService {
 			}
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * Hex -> String
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static String hexToString(String s) {
+		String[] strs = s.split(" ");
+		byte[] baKeyword = new byte[strs.length];
+		for (int i = 0; i < baKeyword.length; i++) {
+			try {
+				baKeyword[i] = (byte) (0xff & Integer.parseInt(strs[i], 16));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			s = new String(baKeyword, "utf-8");// UTF-16le:Not
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return s;
 	}
 }

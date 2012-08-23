@@ -19,10 +19,14 @@
             android:paddingTop="5dip" >
 
                 <!-- Logo Start-->
-                <ImageView android:src="@drawable/logo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dip"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|center_horizontal|center"
+                    android:layout_marginLeft="0dip"
+                    android:src="@drawable/logo" />
+
                 <!-- Logo Ends -->
         </LinearLayout>
         <!--  Header Ends -->
