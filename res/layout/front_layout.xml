@@ -2,51 +2,43 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-
+
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
-            android:layout_height="36dp"
-            android:layout_weight="0.86"
+            android:layout_height="64dp"
             android:background="#ffffff" />
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
             android:layout_height="378dp"
-            android:layout_weight="0.40" />
+            android:layout_weight="1.66" />
 
-        
         <LinearLayout
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:orientation="vertical"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:background="@layout/header_gradient"
-          android:paddingBottom="5dip"
-          android:paddingTop="5dip" 
-          android:padding="10dip"
-          android:layout_below="@android:id/tabcontent">
-          
-          
-            
-          
-        <TextView
-            android:id="@+id/lblStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff" />
-    </LinearLayout>
-     </LinearLayout> 
-</TabHost>
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"     
+            android:background="@layout/header_gradient"
+            android:orientation="vertical"
+            android:padding="10dip"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
 
-    
+            <TextView
+                android:id="@+id/lblStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</TabHost>
