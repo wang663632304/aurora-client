@@ -33,7 +33,12 @@
     <string name="pref_cbupdates_title">Check updates:</string>
    
     
-     
+    <string name="btMsgConnecting">Connecting</string> 
+    <string name="btMsgConnected">Connected to</string> 
+    <string name="btMsgNotConnected">Not connected</string> 
+    <string name="btMsgUnable">Unable to connect to device</string> 
+    <string name="btMsgLost">Connection lost</string> 
+    
      <!-- Oh..we got easter egg here :) -->
      <string name="msgDedication" >"Dedicated to Simona and Aly\n"This is dedicated to the woman I love\nWherever she stands - my dedication"</string>
      

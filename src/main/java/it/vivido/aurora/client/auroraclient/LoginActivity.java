@@ -1,8 +1,11 @@
 package it.vivido.aurora.client.auroraclient;
 
+import it.vivido.aurora.client.base.AuroraActivity;
+import it.vivido.aurora.client.base.AuroraInfo;
+import it.vivido.aurora.client.components.APreferences;
+
 import org.json.JSONObject;
 
-import it.vivido.aurora.client.components.APreferences;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -13,22 +16,17 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AuroraActivity {
 
 	private static String TAG = "aurora_loginactivity";
 
 
-	// Intent request codes
-	private static final int REQUEST_CONNECT_DEVICE = 1;
-	private static final int REQUEST_ENABLE_BT = 2;
 
 	private ProgressDialog progressDialog;
 
-	private AQuery aq;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,9 +37,9 @@ public class LoginActivity extends Activity {
 		checkBluetooth();
 
 		setContentView(R.layout.main);
-		aq = new AQuery(this);
+	
 
-		aq.id(R.id.btnLogin).clicked(this, "login");
+		getAQuery().id(R.id.btnLogin).clicked(this, "login");
 
 		checkConfig();
 
@@ -76,7 +74,7 @@ public class LoginActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode)
 		{
-		case REQUEST_ENABLE_BT:
+		case AuroraInfo.REQUEST_ENABLE_BT:
 			if (resultCode != Activity.RESULT_OK)
 			{				  
 				Toast.makeText(this, R.string.msgBluetoothNotAvailable, Toast.LENGTH_LONG).show();
@@ -92,15 +90,15 @@ public class LoginActivity extends Activity {
 	public void login(View v)
 	{
 		//Check if username and password edits are empty
-		if ((aq.id(R.id.edtEmail).getEditText().getText().toString().isEmpty()) || (aq.id(R.id.edtPassword).getEditText().getText().toString().isEmpty()))
+		if ((getAQuery().id(R.id.edtEmail).getEditText().getText().toString().isEmpty()) || (getAQuery().id(R.id.edtPassword).getEditText().getText().toString().isEmpty()))
 		{		
 			Toast.makeText(getApplication(), R.string.msgEmptyUserPass, Toast.LENGTH_LONG).show();			
-			aq.id(R.id.edtEmail).getEditText().requestFocus();
+			getAQuery().id(R.id.edtEmail).getEditText().requestFocus();
 		}
 		else
 		{
-			APreferences.getInstance(getApplicationContext()).setValue("email", aq.id(R.id.edtEmail).getEditText().getText().toString());
-			APreferences.getInstance(getApplicationContext()).setValue("password", aq.id(R.id.edtPassword).getEditText().getText().toString());
+			APreferences.getInstance(getApplicationContext()).setValue("email", getAQuery().id(R.id.edtEmail).getEditText().getText().toString());
+			APreferences.getInstance(getApplicationContext()).setValue("password", getAQuery().id(R.id.edtPassword).getEditText().getText().toString());
 
 			progressDialog = ProgressDialog.show(LoginActivity.this, "", getResources().getText(R.string.msgLogin), true);			
 
@@ -118,10 +116,9 @@ public class LoginActivity extends Activity {
 		{
 			String email = (String) APreferences.getInstance(getApplicationContext()).getValue("email", String.class);
 			String password = (String) APreferences.getInstance(getApplicationContext()).getValue("password", String.class);
-			aq.find(R.id.edtEmail).getTextView().setText(email);
-			aq.find(R.id.edtPassword).getTextView().setText(password);
+			getAQuery().find(R.id.edtEmail).getTextView().setText(email);
+			getAQuery().find(R.id.edtPassword).getTextView().setText(password);
 						
-			//Toast.makeText(getApplication(), R.string.msgLogin, Toast.LENGTH_LONG).show();
 			login(getCurrentFocus());
 		}
 	}
@@ -129,7 +126,7 @@ public class LoginActivity extends Activity {
 	private void makeAjaxLogin()
 	{
 		String login_ = "http://127.0.0.1";
-		aq.ajax(login_, JSONObject.class, new AjaxCallback<JSONObject>()
+		getAQuery().ajax(login_, JSONObject.class, new AjaxCallback<JSONObject>()
 				{
 
 			@Override

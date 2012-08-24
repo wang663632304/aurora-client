@@ -1,12 +1,11 @@
 package it.vivido.aurora.client.auroraclient;
 
+import it.vivido.aurora.client.base.AuroraInfo;
+import it.vivido.aurora.client.components.BluetoothCommandService;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import it.vivido.aurora.client.components.BluetoothCommandService;
-
-import com.androidquery.AQuery;
 
 import android.app.Activity;
 import android.app.TabActivity;
@@ -26,29 +25,20 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.Toast;
+
+import com.androidquery.AQuery;
 
 public class FrontActivity extends TabActivity implements OnGesturePerformedListener{
-
-	// Intent request codes
-	private static final int REQUEST_CONNECT_DEVICE = 1;
-
-	// Message types sent from the BluetoothChatService Handler
-	public static final int MESSAGE_STATE_CHANGE = 1;
-	public static final int MESSAGE_READ = 2;
-	public static final int MESSAGE_WRITE = 3;
-	public static final int MESSAGE_DEVICE_NAME = 4;
-	public static final int MESSAGE_TOAST = 5;
-	public static final int MESSAGE_DATA_IN = 6;
 
 
 	// Key names received from the BluetoothCommandService Handler
 	public static final String DEVICE_NAME = "device_name";
-	public static final String TOAST = "toast";
 
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothCommandService mCommandService = null; 
@@ -74,7 +64,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 
 		initGestures();
 		
-		
+		tabHost = getTabHost();
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			
 			@Override
@@ -82,26 +72,37 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 				current_index = getTabHost().getCurrentTab();
 			}
 		});
-		tabHost = getTabHost();
-		TabHost.TabSpec spec = tabHost.newTabSpec("Test").setIndicator("Test graph").setContent(new Intent(this, TestGraphLayout.class));
-		tabHost.addTab(spec);
-
-		spec = tabHost.newTabSpec("Test2").setIndicator("Test graph 2").setContent(new Intent(this, TestRPMActivity.class));
-		tabHost.addTab(spec);
-
-		spec = tabHost.newTabSpec("Debug").setIndicator("Debug").setContent(new Intent(this, DebugActivity.class));
-		tabHost.addTab(spec);
-
-
-		Carouseltmr = new Timer();
 		
-		Carouseltmr.cancel();
+		tabHost.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Carouseltmr.cancel();
+				Carouseltmr.purge();
+				
+				
+				return false;
+			}
+		});
+		
+		tabHost.addTab(tabHost.newTabSpec("RPM").setIndicator("RPM",getResources().getDrawable(R.drawable.ic_sensor_rpm) ).setContent(AuroraInfo.createSensorActivity(this, "RPM:", "RPM", " rpm/minute", 0,7000)));
+		tabHost.addTab(tabHost.newTabSpec("Coolant").setIndicator("Coolant temp", getResources().getDrawable(R.drawable.ic_sensor_temp)).setContent(AuroraInfo.createSensorActivity(this, "CTP:", "Coolant Temperature", " *", 0, 100)));
+		tabHost.addTab(tabHost.newTabSpec("Speed").setIndicator("Speed", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "SPEED:", "Car speed", " km/h", 0, 280)));
+
+
+		tabHost.addTab(tabHost.newTabSpec("Debug").setIndicator("Debug", getResources().getDrawable(R.drawable.ic_sensor_debug)).setContent(new Intent(this, DebugActivity.class)));
+		
+
+
+		
+		
 		
 		StartCarousel();
 	}
 
 	private void StartCarousel()
 	{
+		Carouseltmr = new Timer();
 		Carouseltmr.schedule(new TimerTask() {
 
 			@Override
@@ -125,7 +126,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		case R.id.itscan:
 			// Launch the DeviceListActivity to see devices and do scan
 			Intent serverIntent = new Intent(this, MonitorActivity.class);
-			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+			startActivityForResult(serverIntent, AuroraInfo.REQUEST_CONNECT_DEVICE);
 			return true;
 
 		case R.id.itexit:
@@ -145,7 +146,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case REQUEST_CONNECT_DEVICE:
+		case AuroraInfo.REQUEST_CONNECT_DEVICE:
 			// When DeviceListActivity returns with a device to connect
 			if (resultCode == Activity.RESULT_OK) {
 				// Get the device MAC address
@@ -190,47 +191,36 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case MESSAGE_STATE_CHANGE:
+			case AuroraInfo.MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BluetoothCommandService.STATE_CONNECTED:
-					aq.find(R.id.lblStatus).getTextView().setText("Connected to " + mConnectedDeviceName);
+					aq.find(R.id.lblStatus).getTextView().setText(getResources().getString(R.string.btMsgConnected) + " " + mConnectedDeviceName);
 					break;
 				case BluetoothCommandService.STATE_CONNECTING:
-					aq.find(R.id.lblStatus).getTextView().setText("Connecting..");
+					aq.find(R.id.lblStatus).getTextView().setText(R.string.btMsgConnecting);
 
 					break;
 				case BluetoothCommandService.STATE_LISTEN:
 				case BluetoothCommandService.STATE_NONE:
-					aq.find(R.id.lblStatus).getTextView().setText("Not connected");
+					aq.find(R.id.lblStatus).getTextView().setText(R.string.btMsgNotConnected);
 					break;
 				}
 				break;
-			case MESSAGE_DEVICE_NAME:
+			case AuroraInfo.MESSAGE_DEVICE_NAME:
 				// save the connected device's name
 				mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-				aq.find(R.id.lblStatus).getTextView().setText("Connected to " + mConnectedDeviceName);
+				aq.find(R.id.lblStatus).getTextView().setText(getResources().getString(R.string.btMsgConnected) + " " + mConnectedDeviceName);
 				break;
+				
+			case AuroraInfo.MESSAGE_DATA_IN:
+				AuroraInfo.SendOBDBroadcast(getCurrentActivity(), msg.getData().getString("datain"));
 
-
-
-			case MESSAGE_DATA_IN:
-				String data_in = msg.getData().getString("datain");
-				//Toast.makeText(getApplicationContext(),data_in,
-				//        Toast.LENGTH_SHORT).show();
-				SendBroadcast(data_in);
-				break;
 			}
 
 
 		}
 	};
 
-	private void SendBroadcast(String Msg){
-		Intent i = new Intent();
-		i.setAction(DebugActivity.DATA_IN);
-		i.putExtra("datain", Msg);
-		this.sendBroadcast(i);
-	}
 
 	public void NextTab()
 	{
@@ -240,7 +230,8 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 			current_index = 0;
 
 		current_index++;
-		tabHost.setCurrentTab(current_index);
+		getTabHost().setCurrentTab(current_index);
+		StartCarousel();
 
 	}
 	
@@ -252,7 +243,9 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 			current_index = count;
 
 		current_index--;
-		tabHost.setCurrentTab(current_index);
+		getTabHost().setCurrentTab(current_index);
+		StartCarousel();
+
 
 	}
 

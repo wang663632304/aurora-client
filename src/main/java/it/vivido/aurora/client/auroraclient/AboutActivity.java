@@ -1,25 +1,20 @@
 package it.vivido.aurora.client.auroraclient;
 
-import com.androidquery.AQuery;
-
-import android.app.Activity;
+import it.vivido.aurora.client.base.AuroraActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
 
-public class AboutActivity extends Activity {
-
-	private AQuery aq = new AQuery(this);
-
+public class AboutActivity extends AuroraActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_layout);
 
-		aq.find(R.id.ivLogo).getImageView().setOnLongClickListener(IvLogoOLC);
-		aq.id(R.id.bntBack).clicked(this, "OnbntBackClick");
+		getAQuery().find(R.id.ivLogo).getImageView().setOnLongClickListener(IvLogoOLC);
+		getAQuery().id(R.id.bntBack).clicked(this, "OnbntBackClick");
 	}
 
 	private OnLongClickListener IvLogoOLC = new OnLongClickListener() {

@@ -10,6 +10,10 @@ package it.vivido.aurora.client.auroraclient;
 public final class R {
     public static final class attr {
     }
+    public static final class dimen {
+        public static final int medium_big=0x7f060001;
+        public static final int very_big=0x7f060000;
+    }
     public static final class drawable {
         public static final int aurora_logo=0x7f020000;
         public static final int bg=0x7f020001;
@@ -18,38 +22,45 @@ public final class R {
         public static final int ic_exit=0x7f020004;
         public static final int ic_logo_big=0x7f020005;
         public static final int ic_scan=0x7f020006;
-        public static final int ic_settings=0x7f020007;
-        public static final int icon=0x7f020008;
-        public static final int logo=0x7f020009;
-        public static final int repeat_bg=0x7f02000a;
-        public static final int vivido_logo=0x7f02000b;
+        public static final int ic_sensor_debug=0x7f020007;
+        public static final int ic_sensor_rpm=0x7f020008;
+        public static final int ic_sensor_speed=0x7f020009;
+        public static final int ic_sensor_temp=0x7f02000a;
+        public static final int ic_settings=0x7f02000b;
+        public static final int icon=0x7f02000c;
+        public static final int logo=0x7f02000d;
+        public static final int plastic=0x7f02000e;
+        public static final int repeat_bg=0x7f02000f;
+        public static final int vivido_logo=0x7f020010;
     }
     public static final class id {
-        public static final int bntBack=0x7f080006;
-        public static final int btnLogin=0x7f080010;
-        public static final int dynamicPlot=0x7f080013;
-        public static final int edtDebug=0x7f08000a;
-        public static final int edtEmail=0x7f08000e;
-        public static final int edtPassword=0x7f08000f;
-        public static final int footer=0x7f08000d;
-        public static final int header=0x7f08000c;
-        public static final int imageView1=0x7f080007;
-        public static final int itabout=0x7f080017;
-        public static final int itemName=0x7f080008;
-        public static final int itexit=0x7f080018;
-        public static final int itscan=0x7f080015;
-        public static final int itsettings=0x7f080016;
-        public static final int ivLogo=0x7f080000;
-        public static final int ivvvdoLogo=0x7f080005;
-        public static final int lblAppName=0x7f080001;
-        public static final int lblAppVer=0x7f080002;
-        public static final int lblPoweredBy=0x7f080004;
-        public static final int lblRPM=0x7f080014;
-        public static final int lblStatus=0x7f08000b;
-        public static final int link_to_register=0x7f080011;
-        public static final int lvBTDevices=0x7f080012;
-        public static final int textView1=0x7f080009;
-        public static final int textView2=0x7f080003;
+        public static final int bntBack=0x7f090006;
+        public static final int btnLogin=0x7f090010;
+        public static final int dynamicPlot=0x7f090015;
+        public static final int edtDebug=0x7f09000a;
+        public static final int edtEmail=0x7f09000e;
+        public static final int edtPassword=0x7f09000f;
+        public static final int footer=0x7f09000d;
+        public static final int header=0x7f09000c;
+        public static final int imageView1=0x7f090007;
+        public static final int itabout=0x7f090019;
+        public static final int itemName=0x7f090008;
+        public static final int itexit=0x7f09001a;
+        public static final int itscan=0x7f090017;
+        public static final int itsettings=0x7f090018;
+        public static final int ivLogo=0x7f090000;
+        public static final int ivvvdoLogo=0x7f090005;
+        public static final int lblAppName=0x7f090001;
+        public static final int lblAppVer=0x7f090002;
+        public static final int lblPoweredBy=0x7f090004;
+        public static final int lblRPM=0x7f090016;
+        public static final int lblSensorData=0x7f090014;
+        public static final int lblSensorLabel=0x7f090013;
+        public static final int lblStatus=0x7f09000b;
+        public static final int link_to_register=0x7f090011;
+        public static final int lvBTDevices=0x7f090012;
+        public static final int textView1=0x7f090009;
+        public static final int textView2=0x7f090003;
     }
     public static final class layout {
         public static final int about_layout=0x7f030000;
@@ -60,42 +71,48 @@ public final class R {
         public static final int header_gradient=0x7f030005;
         public static final int main=0x7f030006;
         public static final int monitor_layout=0x7f030007;
-        public static final int testgraph_layout=0x7f030008;
-        public static final int testrpm_layout=0x7f030009;
+        public static final int sensor_layout=0x7f030008;
+        public static final int testgraph_layout=0x7f030009;
+        public static final int testrpm_layout=0x7f03000a;
     }
     public static final class menu {
-        public static final int m_front=0x7f070000;
+        public static final int m_front=0x7f080000;
     }
     public static final class raw {
         public static final int gestures=0x7f050000;
     }
     public static final class string {
-        public static final int app_name=0x7f060000;
-        public static final int app_version=0x7f060001;
-        public static final int bntBack=0x7f06000c;
-        public static final int bntLogin=0x7f060002;
-        public static final int bntRegisterNew=0x7f060003;
-        public static final int m_about=0x7f06000b;
-        public static final int m_exit=0x7f060009;
-        public static final int m_scan=0x7f060008;
-        public static final int m_settings=0x7f06000a;
-        public static final int msgBluetoothEnabled=0x7f060007;
-        public static final int msgBluetoothNotAvailable=0x7f060006;
+        public static final int app_name=0x7f070000;
+        public static final int app_version=0x7f070001;
+        public static final int bntBack=0x7f07000c;
+        public static final int bntLogin=0x7f070002;
+        public static final int bntRegisterNew=0x7f070003;
+        public static final int btMsgConnected=0x7f070018;
+        public static final int btMsgConnecting=0x7f070017;
+        public static final int btMsgLost=0x7f07001b;
+        public static final int btMsgNotConnected=0x7f070019;
+        public static final int btMsgUnable=0x7f07001a;
+        public static final int m_about=0x7f07000b;
+        public static final int m_exit=0x7f070009;
+        public static final int m_scan=0x7f070008;
+        public static final int m_settings=0x7f07000a;
+        public static final int msgBluetoothEnabled=0x7f070007;
+        public static final int msgBluetoothNotAvailable=0x7f070006;
         /**  Oh..we got easter egg here :) 
          */
-        public static final int msgDedication=0x7f060017;
-        public static final int msgEmptyUserPass=0x7f060005;
-        public static final int msgLogin=0x7f060004;
-        public static final int pref_cat_account=0x7f06000d;
-        public static final int pref_cat_application=0x7f06000e;
-        public static final int pref_cbupdates_summary=0x7f060015;
-        public static final int pref_cbupdates_title=0x7f060016;
-        public static final int pref_edtpassword_dialogMessage=0x7f060012;
-        public static final int pref_edtpassword_summary=0x7f060013;
-        public static final int pref_edtpassword_title=0x7f060014;
-        public static final int pref_edtusername_dialogMessage=0x7f06000f;
-        public static final int pref_edtusername_summary=0x7f060010;
-        public static final int pref_edtusername_title=0x7f060011;
+        public static final int msgDedication=0x7f07001c;
+        public static final int msgEmptyUserPass=0x7f070005;
+        public static final int msgLogin=0x7f070004;
+        public static final int pref_cat_account=0x7f07000d;
+        public static final int pref_cat_application=0x7f07000e;
+        public static final int pref_cbupdates_summary=0x7f070015;
+        public static final int pref_cbupdates_title=0x7f070016;
+        public static final int pref_edtpassword_dialogMessage=0x7f070012;
+        public static final int pref_edtpassword_summary=0x7f070013;
+        public static final int pref_edtpassword_title=0x7f070014;
+        public static final int pref_edtusername_dialogMessage=0x7f07000f;
+        public static final int pref_edtusername_summary=0x7f070010;
+        public static final int pref_edtusername_title=0x7f070011;
     }
     public static final class xml {
         public static final int preferences_layout=0x7f040000;

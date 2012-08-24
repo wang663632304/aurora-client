@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"    
+    >
+
+    <!--
+         <it.vivido.aurora.client.components.Thermometer
+      android:id="@+id/sens_therm"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="2.0" />
+    -->
+
+    <TextView
+        android:id="@+id/lblSensorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:includeFontPadding="false"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ff0000"
+        android:textSize="100dp" />
+
+    <TextView
+        android:id="@+id/lblSensorData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblSensorLabel"
+        android:layout_centerHorizontal="true"
+        android:includeFontPadding="false"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:textSize="80dp" />
+
+</RelativeLayout>

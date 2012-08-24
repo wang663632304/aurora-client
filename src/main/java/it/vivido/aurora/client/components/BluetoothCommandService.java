@@ -1,12 +1,15 @@
 package it.vivido.aurora.client.components;
 
 import it.vivido.aurora.client.auroraclient.FrontActivity;
+import it.vivido.aurora.client.auroraclient.R;
+import it.vivido.aurora.client.base.AuroraInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -45,12 +48,6 @@ public class BluetoothCommandService {
 	public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
 	public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
-	// Constants that indicate command to computer
-	public static final int EXIT_CMD = -1;
-	public static final int VOL_UP = 1;
-	public static final int VOL_DOWN = 2;
-	public static final int MOUSE_MOVE = 3;
-
 	/**
 	 * Constructor. Prepares a new BluetoothChat session.
 	 * @param context  The UI Activity Context
@@ -72,7 +69,7 @@ public class BluetoothCommandService {
 		mState = state;
 
 		// Give the new state to the Handler so the UI Activity can update
-		mHandler.obtainMessage(FrontActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+		mHandler.obtainMessage(AuroraInfo.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
 	}
 
 	/**
@@ -136,7 +133,7 @@ public class BluetoothCommandService {
 		mConnectedThread.start();
 
 		// Send the name of the connected device back to the UI Activity
-		Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_DEVICE_NAME);
+		Message msg = mHandler.obtainMessage(AuroraInfo.MESSAGE_DEVICE_NAME);
 		Bundle bundle = new Bundle();
 		bundle.putString(FrontActivity.DEVICE_NAME, device.getName());
 		msg.setData(bundle);
@@ -197,9 +194,9 @@ public class BluetoothCommandService {
 		setState(STATE_LISTEN);
 
 		// Send a failure message back to the Activity
-		Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_TOAST);
+		Message msg = mHandler.obtainMessage(AuroraInfo.MESSAGE_TOAST);
 		Bundle bundle = new Bundle();
-		bundle.putString(FrontActivity.TOAST, "Unable to connect device");
+//		bundle.putString(AuroraInfo.TOAST, );
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
 	}
@@ -208,22 +205,12 @@ public class BluetoothCommandService {
 	 * Indicate that the connection was lost and notify the UI Activity.
 	 */
 	private void connectionLost() {
-		//	        mConnectionLostCount++;
-		//	        if (mConnectionLostCount < 3) {
-		//	        	// Send a reconnect message back to the Activity
-		//		        Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_TOAST);
-		//		        Bundle bundle = new Bundle();
-		//		        bundle.putString(FrontActivity.TOAST, "Device connection was lost. Reconnecting...");
-		//		        msg.setData(bundle);
-		//		        mHandler.sendMessage(msg);
-		//		        
-		//	        	connect(mSavedDevice);   	
-		//	        } else {
+		
 		setState(STATE_LISTEN);
 		// Send a failure message back to the Activity
-		Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_TOAST);
+		Message msg = mHandler.obtainMessage(AuroraInfo.MESSAGE_TOAST);
 		Bundle bundle = new Bundle();
-		bundle.putString(FrontActivity.TOAST, "Device connection was lost");
+	//	bundle.putString(AuroraInfo.TOAST, "Device connection was lost");
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
 		//	        }
@@ -347,7 +334,7 @@ public class BluetoothCommandService {
 						//mHandler.obtainMessage(FrontActivity.MESSAGE_READ, bytes, -1, tosend)
 						//.sendToTarget();
 
-						Message msg = mHandler.obtainMessage(FrontActivity.MESSAGE_DATA_IN);
+						Message msg = mHandler.obtainMessage(AuroraInfo.MESSAGE_DATA_IN);
 						Bundle bundle = new Bundle();
 						bundle.putString("datain", str);
 						msg.setData(bundle);
@@ -371,7 +358,7 @@ public class BluetoothCommandService {
 				mmOutStream.write(buffer);
 
 				// Share the sent message back to the UI Activity
-				mHandler.obtainMessage(FrontActivity.MESSAGE_WRITE, -1, -1, buffer)
+				mHandler.obtainMessage(AuroraInfo.MESSAGE_WRITE, -1, -1, buffer)
 				.sendToTarget();
 			} catch (IOException e) {
 				Log.e(TAG, "Exception during write", e);
@@ -392,7 +379,6 @@ public class BluetoothCommandService {
 
 		public void cancel() {
 			try {
-				mmOutStream.write(EXIT_CMD);
 				mmSocket.close();
 			} catch (IOException e) {
 				Log.e(TAG, "close() of connect socket failed", e);

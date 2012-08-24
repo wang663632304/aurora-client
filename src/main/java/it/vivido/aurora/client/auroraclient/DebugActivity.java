@@ -1,5 +1,6 @@
 package it.vivido.aurora.client.auroraclient;
 
+import it.vivido.aurora.client.base.AuroraInfo;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,9 +12,7 @@ import com.androidquery.AQuery;
 
 public class DebugActivity extends Activity {
 
-	public static final String DATA_IN = "it.vivido.aurora.client.auroraclient.DATA_IN";
-	public static final int MESSAGE_DATA_IN = 6;
-
+	
 	private AQuery aq;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class DebugActivity extends Activity {
 		setContentView(R.layout.debug_activity);
 		aq = new AQuery(this);
 
-		registerReceiver(btr, new IntentFilter(DATA_IN));
+		registerReceiver(btr, new IntentFilter(AuroraInfo.DATA_IN));
 
 	}
 
@@ -32,7 +31,7 @@ public class DebugActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			  String action = intent.getAction();
-			  if (action.equals(DATA_IN))
+			  if (action.equals(AuroraInfo.DATA_IN))
 			  {
 				  String datain = intent.getStringExtra("datain");
 				  aq.find(R.id.edtDebug).getEditText().append(datain);

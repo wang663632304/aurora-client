@@ -1,5 +1,7 @@
 package it.vivido.aurora.client.auroraclient;
 
+import it.vivido.aurora.client.base.AuroraActivity;
+
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -16,36 +18,31 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
 
-public class MonitorActivity extends Activity {
+public class MonitorActivity extends AuroraActivity {
 
 
-	private ArrayList<String> devices = new ArrayList<String>();
+	
 	private ArrayAdapter<String> dataAdapter;
 	private BroadcastReceiver bluetoothBReceiver;
 
 
-	// Intent request codes
-	private static final int REQUEST_CONNECT_DEVICE = 1;
-	private static final int REQUEST_ENABLE_BT = 2;
 	 // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
 
-	private AQuery aq;
+	
 	private BluetoothAdapter mBluetoothAdapter = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		aq = new AQuery(this);
+	
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
@@ -57,8 +54,8 @@ public class MonitorActivity extends Activity {
 	protected void onStart() {
 
 		dataAdapter = new ArrayAdapter<String>(this, R.layout.bt_item, R.id.itemName);		
-		aq.id(R.id.lvBTDevices).getListView().setAdapter(dataAdapter);
-		aq.id(R.id.lvBTDevices).getListView().setOnItemClickListener(mDeviceClickListener);
+		getAQuery().id(R.id.lvBTDevices).getListView().setAdapter(dataAdapter);
+		getAQuery().id(R.id.lvBTDevices).getListView().setOnItemClickListener(mDeviceClickListener);
 		discoverDevices();
 		super.onStart();
 	}

@@ -1,19 +1,19 @@
 package it.vivido.aurora.client.auroraclient;
 
-import java.util.Random;
+import it.vivido.aurora.client.base.AuroraActivity;
+import it.vivido.aurora.client.base.AuroraInfo;
+
 import java.util.Timer;
-import java.util.TimerTask;
 
-import com.androidquery.AQuery;
-
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-public class TestRPMActivity extends Activity {
+import com.androidquery.AQuery;
+
+public class TestRPMActivity extends AuroraActivity {
 
 	private static String rpm = "0";
 	AQuery aq;
@@ -23,7 +23,7 @@ public class TestRPMActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.testrpm_layout);
 		aq = new AQuery(this);
-		registerReceiver(btr, new IntentFilter(DebugActivity.DATA_IN));
+		registerReceiver(btr, new IntentFilter(AuroraInfo.DATA_IN));
 	}
 		
 	private BroadcastReceiver btr = new BroadcastReceiver() {
@@ -31,7 +31,7 @@ public class TestRPMActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			if (action.equals(DebugActivity.DATA_IN))
+			if (action.equals(AuroraInfo.DATA_IN))
 			{
 				String datain = intent.getStringExtra("datain");
 				//String[] str = datain.split("\r\n");
