@@ -42,7 +42,7 @@ public class AuroraInfo {
 	 * @param sensor
 	 * @return
 	 */
-	public static Intent createSensorActivity(Context context, String sensor_key, String sensor_label, String sensor_unit, int sensor_min, int sensor_max)
+	public static Intent createSensorActivity(Context context, String sensor_key, String sensor_label, String sensor_unit, int sensor_min, int sensor_max, String sensor_pachube_key)
 	{
 		Intent i = new Intent(context, AuroraSensorActivity.class);
 		Bundle b = new Bundle();
@@ -52,6 +52,7 @@ public class AuroraInfo {
 		b.putString("sensor_label", sensor_label);		
 		b.putInt("sensor_min", sensor_min);
 		b.putInt("sensor_max", sensor_max);
+		b.putString("sensor_pachube_key", sensor_pachube_key);
 		
 		i.putExtras(b);
 		

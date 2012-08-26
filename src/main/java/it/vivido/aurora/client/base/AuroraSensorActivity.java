@@ -1,6 +1,10 @@
 package it.vivido.aurora.client.base;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import it.vivido.aurora.client.auroraclient.R;
+import it.vivido.aurora.client.components.CosmLibrary;
 import it.vivido.aurora.client.components.Thermometer;
 
 import com.androidquery.AQuery;
@@ -11,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 
 public class AuroraSensorActivity extends Activity{
 
@@ -18,12 +23,14 @@ public class AuroraSensorActivity extends Activity{
 	private String sensor_key = "";
 	private String sensor_label = "";
 	private String sensor_unit = "";
-	
+	private String sensor_pachube_key = "";
+
 	private int sensor_min = 0;
 	private int sensor_max = 0;
-	
+
 
 	private String sensor_value = "";
+	Double  sensor_perc;
 
 	private Thermometer termo;
 	private AQuery aq_;
@@ -36,21 +43,25 @@ public class AuroraSensorActivity extends Activity{
 		sensor_key =  getIntent().getExtras().getString("sensor_key");	
 		sensor_label = getIntent().getExtras().getString("sensor_label");
 		sensor_unit = getIntent().getExtras().getString("sensor_unit");
+		sensor_min = getIntent().getExtras().getInt("sensor_min");
 		sensor_max = getIntent().getExtras().getInt("sensor_max");
-		sensor_max = getIntent().getExtras().getInt("sensor_max");
+		sensor_pachube_key = getIntent().getExtras().getString("sensor_pachube_key");
 
-	
-		
+
 		setContentView(R.layout.sensor_layout);
 
 		//termo = (Thermometer) findViewById(R.id.sens_therm);
 		//termo.setMinMax(sensor_min, sensor_max);
 		//termo.Progress(sensor_min);
-		
+
 		aq_.find(R.id.lblSensorLabel).getTextView().setText(sensor_label);
 		aq_.find(R.id.lblSensorData).getTextView().setText("N/A");
 
+
+
 		registerReceiver(btr, new IntentFilter(AuroraInfo.DATA_IN));
+
+		initPachubeUpdate();
 
 	}
 
@@ -71,7 +82,7 @@ public class AuroraSensorActivity extends Activity{
 				{
 					if (datain.split("\r\n").length == 1)
 					{
-						sensor_value =datain.replace(sensor_key, "").replace("\r\n", "");
+						sensor_value = datain.substring(datain.indexOf(sensor_key) + sensor_key.length(), datain.indexOf("#END")).replace("\r\n", "");
 						executeSensorUpdate();
 					}}
 			}
@@ -87,16 +98,46 @@ public class AuroraSensorActivity extends Activity{
 		public void run() {
 
 			aq_.find(R.id.lblSensorData).getTextView().setText(String.format("%s%s", sensor_value, sensor_unit));
-			
+
 			try
 			{
+				sensor_perc =  (double) ( ( Integer.parseInt(sensor_value) / sensor_max ) * 100 );
+				aq_.find(R.id.pbSensor).getProgressBar().setProgress(sensor_perc.intValue());
 				//termo.Progress(Integer.parseInt(sensor_value));
 			}
 			catch(Exception ex)
 			{
-				
+
 			}
 		}
 	};
+
+	private Runnable PachubeUpdate = new Runnable() {
+
+		@Override
+		public void run() {
+			if (!sensor_value.isEmpty())
+			{   Log.i(String.format("sensor_%s", sensor_key), "Upload to cosm.com");
+				CosmLibrary.getInstance(getApplicationContext()).updateSensor(sensor_pachube_key, sensor_value);
+			}
+		}
+	};
+
+	private void initPachubeUpdate()
+	{
+		if (!sensor_pachube_key.isEmpty())
+		{
+			Timer tmrPachube = new Timer();
+			tmrPachube.scheduleAtFixedRate(new TimerTask() {
+
+				@Override
+				public void run() {
+					runOnUiThread(PachubeUpdate);					
+				}
+			}, 0, 10000);
+
+
+		}
+	}
 
 }

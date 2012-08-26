@@ -27,6 +27,10 @@
    
     <string name="pref_cbupdates_summary">Spunta questa casella per abilitare i controlli di aggiornamento</string>
     <string name="pref_cbupdates_title">Controlla aggiornamenti:</string>
+    
+     <string name="pref_cbdataupload_summary">Spunta questa casella per abilitare l\'invio dei dati</string>
+    <string name="pref_cbdataupload_title">Invio dati:</string>
+   
       
       <string name="bntBack">Indietro</string>
      

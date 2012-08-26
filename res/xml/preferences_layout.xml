@@ -11,6 +11,12 @@
         android:summary="@string/pref_cbupdates_summary"
         android:title="@string/pref_cbupdates_title" />
             
+            <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="dataupload"
+        android:summary="@string/pref_cbdataupload_summary"
+        android:title="@string/pref_cbdataupload_title" />
+            
             
         </PreferenceCategory>
             

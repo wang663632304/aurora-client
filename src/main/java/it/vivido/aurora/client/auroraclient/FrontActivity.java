@@ -85,9 +85,10 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 			}
 		});
 		
-		tabHost.addTab(tabHost.newTabSpec("RPM").setIndicator("RPM",getResources().getDrawable(R.drawable.ic_sensor_rpm) ).setContent(AuroraInfo.createSensorActivity(this, "RPM:", "RPM", " rpm/minute", 0,7000)));
-		tabHost.addTab(tabHost.newTabSpec("Coolant").setIndicator("Coolant temp", getResources().getDrawable(R.drawable.ic_sensor_temp)).setContent(AuroraInfo.createSensorActivity(this, "CTP:", "Coolant Temperature", " *", 0, 100)));
-		tabHost.addTab(tabHost.newTabSpec("Speed").setIndicator("Speed", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "SPEED:", "Car speed", " km/h", 0, 280)));
+		tabHost.addTab(tabHost.newTabSpec("RPM").setIndicator("RPM",getResources().getDrawable(R.drawable.ic_sensor_rpm) ).setContent(AuroraInfo.createSensorActivity(this, "RPM:", "RPM", " rpm/minute", 0,7000, "rpm")));
+		tabHost.addTab(tabHost.newTabSpec("Coolant").setIndicator("Coolant temp", getResources().getDrawable(R.drawable.ic_sensor_temp)).setContent(AuroraInfo.createSensorActivity(this, "COT:", "Coolant Temperature", " *", 0, 100, "coolant_temp")));
+		tabHost.addTab(tabHost.newTabSpec("Speed").setIndicator("Speed", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "SPD:", "Car speed", " km/h", 0, 280, "speed")));
+		tabHost.addTab(tabHost.newTabSpec("Throttle").setIndicator("Throttle", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "THR:", "Throttle", " %", 0, 100, "")));
 
 
 		tabHost.addTab(tabHost.newTabSpec("Debug").setIndicator("Debug", getResources().getDrawable(R.drawable.ic_sensor_debug)).setContent(new Intent(this, DebugActivity.class)));
