@@ -3,7 +3,7 @@ package it.vivido.aurora.client.auroraclient;
 import java.util.Random;
 
 import it.vivido.aurora.client.base.AuroraInfo;
-import it.vivido.aurora.client.components.CosmLibrary;
+import it.vivido.aurora.client.components.DataUploadLibrary;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -50,7 +50,7 @@ public class DebugActivity extends Activity {
 	
 	public void bntPachube(View v)
 	{
-		CosmLibrary.getInstance(this).updateSensor("rpm", Integer.toString(new Random().nextInt(6000)));
+		DataUploadLibrary.getInstance(this).updateSensor("rpm", Integer.toString(new Random().nextInt(6000)));
 	}
 
 

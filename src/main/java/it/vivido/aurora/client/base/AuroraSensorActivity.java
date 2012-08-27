@@ -4,7 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import it.vivido.aurora.client.auroraclient.R;
-import it.vivido.aurora.client.components.CosmLibrary;
+import it.vivido.aurora.client.components.APreferences;
+import it.vivido.aurora.client.components.DataUploadLibrary;
 import it.vivido.aurora.client.components.Thermometer;
 
 import com.androidquery.AQuery;
@@ -78,13 +79,22 @@ public class AuroraSensorActivity extends Activity{
 			if (action.equals(AuroraInfo.DATA_IN))
 			{
 				String datain = intent.getStringExtra("datain");
-				if (datain.startsWith(sensor_key))
+				
+				String a_datain[] = datain.split("\r\n");
+				
+				for (int i=0;i<a_datain.length;i++)
 				{
-					if (datain.split("\r\n").length == 1)
+					if (a_datain[i].startsWith(sensor_key))
 					{
-						sensor_value = datain.substring(datain.indexOf(sensor_key) + sensor_key.length(), datain.indexOf("#END")).replace("\r\n", "");
-						executeSensorUpdate();
-					}}
+						String data = a_datain[i];
+						//if (datain.split("\r\n").length == 1)
+						//{
+							sensor_value = datain.substring(data.indexOf(sensor_key) + sensor_key.length(), data.indexOf("#END")).replace("\r\n", "");
+							executeSensorUpdate();
+						//}
+						
+					}
+				}				
 			}
 		}
 	};
@@ -101,7 +111,7 @@ public class AuroraSensorActivity extends Activity{
 
 			try
 			{
-				sensor_perc =  (double) ( ( Integer.parseInt(sensor_value) / sensor_max ) * 100 );
+				sensor_perc =  (double)((Integer.parseInt(sensor_value) * 100.0f) / sensor_max);
 				aq_.find(R.id.pbSensor).getProgressBar().setProgress(sensor_perc.intValue());
 				//termo.Progress(Integer.parseInt(sensor_value));
 			}
@@ -118,13 +128,24 @@ public class AuroraSensorActivity extends Activity{
 		public void run() {
 			if (!sensor_value.isEmpty())
 			{   Log.i(String.format("sensor_%s", sensor_key), "Upload to cosm.com");
-				CosmLibrary.getInstance(getApplicationContext()).updateSensor(sensor_pachube_key, sensor_value);
+				DataUploadLibrary.getInstance(getApplicationContext()).updateSensor(sensor_pachube_key, sensor_value);
 			}
 		}
 	};
 
 	private void initPachubeUpdate()
 	{
+		int refresh_rate = 0;
+		
+		String tmp = (String) APreferences.getInstance(this).getValue("dataupload_interval", String.class);
+		if (tmp.isEmpty())
+		{
+			APreferences.getInstance(this).setValue("dataupload_interval", 30000);
+		}
+		
+		refresh_rate =  Integer.parseInt(tmp);
+	
+		 Log.i(String.format("sensor_%s", sensor_key), "Starting upload thread every " + refresh_rate + " milliseconds");
 		if (!sensor_pachube_key.isEmpty())
 		{
 			Timer tmrPachube = new Timer();
@@ -134,7 +155,7 @@ public class AuroraSensorActivity extends Activity{
 				public void run() {
 					runOnUiThread(PachubeUpdate);					
 				}
-			}, 0, 10000);
+			}, 0, refresh_rate);
 
 
 		}

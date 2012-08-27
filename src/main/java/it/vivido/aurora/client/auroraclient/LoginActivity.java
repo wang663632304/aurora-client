@@ -2,11 +2,13 @@ package it.vivido.aurora.client.auroraclient;
 
 import it.vivido.aurora.client.base.AuroraActivity;
 import it.vivido.aurora.client.base.AuroraInfo;
+import it.vivido.aurora.client.components.AComponents;
 import it.vivido.aurora.client.components.APreferences;
 
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -23,6 +25,7 @@ public class LoginActivity extends AuroraActivity {
 
 	private static String TAG = "aurora_loginactivity";
 
+	private Activity _activity;
 
 
 	private ProgressDialog progressDialog;
@@ -30,14 +33,19 @@ public class LoginActivity extends AuroraActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		_activity = this;
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Log.i(TAG, "onCreate");
-
-		initBluetooth();
+		
+		
+	
+		
+		initAComponents();
 		checkBluetooth();
+	
 
 		setContentView(R.layout.main);
-	
+
 
 		getAQuery().id(R.id.btnLogin).clicked(this, "login");
 
@@ -46,6 +54,11 @@ public class LoginActivity extends AuroraActivity {
 
 	}
 
+	private void initAComponents()
+	{
+		AComponents.getInstance(getApplicationContext());
+		AComponents.getInstance().getALocationManager();
+	}
 	/**
 	 * Check if bluetooth is available, else close application :(
 	 */
@@ -84,6 +97,11 @@ public class LoginActivity extends AuroraActivity {
 			{
 				Toast.makeText(this, R.string.msgBluetoothEnabled, Toast.LENGTH_LONG).show();
 			}			
+		
+		case AuroraInfo.EXIT_APPLICATION:
+			finish();
+			System.exit(0);
+			
 		}
 	}
 
@@ -118,10 +136,12 @@ public class LoginActivity extends AuroraActivity {
 			String password = (String) APreferences.getInstance(getApplicationContext()).getValue("password", String.class);
 			getAQuery().find(R.id.edtEmail).getTextView().setText(email);
 			getAQuery().find(R.id.edtPassword).getTextView().setText(password);
-						
+
 			login(getCurrentFocus());
 		}
 	}
+	
+
 
 	private void makeAjaxLogin()
 	{
@@ -137,9 +157,8 @@ public class LoginActivity extends AuroraActivity {
 				{
 					Thread.sleep(2000);
 					progressDialog.hide();
-					//Toast.makeText(getApplication(), R.string.msgLogin, Toast.LENGTH_LONG).show();
 					Intent in = new Intent(getBaseContext(), FrontActivity.class);
-					startActivity(in);
+					startActivityForResult(in, AuroraInfo.EXIT_APPLICATION);
 				}
 				catch(Exception ex)
 				{

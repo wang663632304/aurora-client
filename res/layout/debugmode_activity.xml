@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@layout/bk_grandient"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/bntDebugEnableSim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable simulator" />
+
+    <Button
+        android:id="@+id/bntDebugDisableSim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disable simulator" />
+
+    <Button
+        android:id="@+id/bntDebugTestMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test MSG: type" />
+
+</LinearLayout>

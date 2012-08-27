@@ -1,6 +1,5 @@
 package it.vivido.aurora.client.base;
 
-import it.vivido.aurora.client.auroraclient.TestRPMActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +9,7 @@ public class AuroraInfo {
 
 	public static final String DATA_IN = "it.vivido.aurora.client.auroraclient.DATA_IN";
 
+	public static final Boolean DEBUG_MODE = true;
 	// Intent request codes
 	public static final int REQUEST_CONNECT_DEVICE = 1;
 	public static final int REQUEST_ENABLE_BT = 2;
@@ -21,6 +21,8 @@ public class AuroraInfo {
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
 	public static final int MESSAGE_DATA_IN = 6;
+	
+	public static final int EXIT_APPLICATION = 99;
 	
 	public static final String TOAST = "toast";
 
@@ -59,4 +61,5 @@ public class AuroraInfo {
 		return i;
 		
 	}
+	
 }

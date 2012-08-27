@@ -34,9 +34,16 @@
     
     <string name="pref_cbdataupload_summary">Check this for enable data upload</string>
     <string name="pref_cbdataupload_title">Data upload:</string>
-   
     
-    <string name="btMsgConnecting">Connecting</string> 
+    <string name="pref_lstdataupload_inverval_summary">Define how often updates will be performed</string>
+    <string name="pref_lstdataupload_inverval_title">Updates interval</string>
+   
+   <string name="every_10sec">Every 10 seconds</string>
+   <string name="every_30sec">Every 30 seconds</string>
+   <string name="every_1min">Every 1 minute</string>
+   <string name="every_5min">Every 5 minute</string>
+   
+   <string name="btMsgConnecting">Connecting</string> 
     <string name="btMsgConnected">Connected to</string> 
     <string name="btMsgNotConnected">Not connected</string> 
     <string name="btMsgUnable">Unable to connect to device</string> 

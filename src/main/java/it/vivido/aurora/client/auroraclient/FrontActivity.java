@@ -1,7 +1,9 @@
 package it.vivido.aurora.client.auroraclient;
 
 import it.vivido.aurora.client.base.AuroraInfo;
+import it.vivido.aurora.client.components.ASimulator;
 import it.vivido.aurora.client.components.BluetoothCommandService;
+import it.vivido.aurora.client.services.MsgService;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -12,6 +14,7 @@ import android.app.TabActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -63,41 +66,44 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		//setContentView(R.layout.front_layout);
 
 		initGestures();
-		
+
 		tabHost = getTabHost();
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
-			
+
 			@Override
 			public void onTabChanged(String tabId) {
 				current_index = getTabHost().getCurrentTab();
 			}
 		});
-		
+
 		tabHost.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				Carouseltmr.cancel();
 				Carouseltmr.purge();
-				
-				
+
+
 				return false;
 			}
 		});
-		
+
 		tabHost.addTab(tabHost.newTabSpec("RPM").setIndicator("RPM",getResources().getDrawable(R.drawable.ic_sensor_rpm) ).setContent(AuroraInfo.createSensorActivity(this, "RPM:", "RPM", " rpm/minute", 0,7000, "rpm")));
 		tabHost.addTab(tabHost.newTabSpec("Coolant").setIndicator("Coolant temp", getResources().getDrawable(R.drawable.ic_sensor_temp)).setContent(AuroraInfo.createSensorActivity(this, "COT:", "Coolant Temperature", " *", 0, 100, "coolant_temp")));
 		tabHost.addTab(tabHost.newTabSpec("Speed").setIndicator("Speed", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "SPD:", "Car speed", " km/h", 0, 280, "speed")));
 		tabHost.addTab(tabHost.newTabSpec("Throttle").setIndicator("Throttle", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "THR:", "Throttle", " %", 0, 100, "")));
 
 
-		tabHost.addTab(tabHost.newTabSpec("Debug").setIndicator("Debug", getResources().getDrawable(R.drawable.ic_sensor_debug)).setContent(new Intent(this, DebugActivity.class)));
-		
+		if (AuroraInfo.DEBUG_MODE)
+		{
+			tabHost.addTab(tabHost.newTabSpec("Debug").setIndicator("Debug", getResources().getDrawable(R.drawable.ic_sensor_debug)).setContent(new Intent(this, DebugActivity.class)));
+			tabHost.addTab(tabHost.newTabSpec("Debug Cmd").setIndicator("Debug Cmd", getResources().getDrawable(R.drawable.ic_sensor_debug)).setContent(new Intent(this, DebugModeActivity.class)));
+
+		}
+
+		registerReceiver(new MsgService(), new IntentFilter(AuroraInfo.DATA_IN));		
 
 
-		
-		
-		
 		StartCarousel();
 	}
 
@@ -131,7 +137,8 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 			return true;
 
 		case R.id.itexit:
-			System.exit(0);
+			setResult(AuroraInfo.EXIT_APPLICATION);
+			finish();
 			return true;
 		case R.id.itsettings:
 			startActivity(new Intent(this, PrefsActivity.class));
@@ -212,7 +219,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 				mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
 				aq.find(R.id.lblStatus).getTextView().setText(getResources().getString(R.string.btMsgConnected) + " " + mConnectedDeviceName);
 				break;
-				
+
 			case AuroraInfo.MESSAGE_DATA_IN:
 				AuroraInfo.SendOBDBroadcast(getCurrentActivity(), msg.getData().getString("datain"));
 
@@ -235,7 +242,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		StartCarousel();
 
 	}
-	
+
 	public void PrevTab()
 	{
 		int count = tabHost.getTabWidget().getTabCount();
@@ -269,14 +276,13 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
 		for (Prediction prediction : predictions) {
 			if (prediction.score > 1.0) {
-				
+
 				if (prediction.name.equals("right"))
 					NextTab();
 				if (prediction.name.equals("left"))
 					PrevTab();
 			}
 		}
-
 	}
 }
 
