@@ -92,6 +92,7 @@ public class FrontActivity extends TabActivity implements OnGesturePerformedList
 		tabHost.addTab(tabHost.newTabSpec("Coolant").setIndicator("Coolant temp", getResources().getDrawable(R.drawable.ic_sensor_temp)).setContent(AuroraInfo.createSensorActivity(this, "COT:", "Coolant Temperature", " *", 0, 100, "coolant_temp")));
 		tabHost.addTab(tabHost.newTabSpec("Speed").setIndicator("Speed", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "SPD:", "Car speed", " km/h", 0, 280, "speed")));
 		tabHost.addTab(tabHost.newTabSpec("Throttle").setIndicator("Throttle", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(AuroraInfo.createSensorActivity(this, "THR:", "Throttle", " %", 0, 100, "")));
+		tabHost.addTab(tabHost.newTabSpec("Location").setIndicator("Location", getResources().getDrawable(R.drawable.ic_sensor_speed)).setContent(new Intent(this, MapPosActivity.class)));
 
 
 		if (AuroraInfo.DEBUG_MODE)
